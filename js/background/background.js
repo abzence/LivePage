@@ -55,7 +55,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 			$LivePageDebug(['Testing file://', 'Started']);
 			
 			// It's a file, so lets run a quick test to see if we support it. Based on http://pastebin.com/3deXunJV because Chromes API dosen't throw errors!
-		    chrome.tabs.executeScript(tab.id, {file: 'js/file_protocol_test.js'}, function() {
+		    chrome.tabs.executeScript(tab.id, {file: 'js/background/file_protocol_test.js'}, function() {
 		        // This function always fires *after* the attempt to run the code
 		        var exec_error = setTimeout(function(){alert(chrome.i18n.getMessage('@file_protocol_needs_enabling')); $LivePageDebug(['Testing file://', 'Failed']);}, 100);
 		        chrome.tabs.sendRequest(tab.id, 'Ping', function(result) {
