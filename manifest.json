@@ -5,7 +5,7 @@
   "description": "__MSG_description__",
   "default_locale": "en",
   "background": {
-    "scripts": ["js/background/objects.js","js/background/background.js"]
+    "scripts": ["js/background/settings.js", "js/background/livepages.js", "js/background/background.js"]
   },
   "options_page": "options.html",
   "homepage_url": "https://chrome.google.com/webstore/detail/pilnojpmdoofaelbinaeodfpjheijkbh",

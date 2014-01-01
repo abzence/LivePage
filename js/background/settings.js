@@ -25,9 +25,9 @@ function Settings(){
 		use_only_get: false,
 		tidy_html: true,
 		tidy_inline_html: false,
-		use_css_transitions: true,
+		use_css_transitions: false,
 		debug_mode: false,
-		refresh_rate: 200
+		refresh_rate: 250
 	};
 	
 	// Check for old settings and do the upgrade
