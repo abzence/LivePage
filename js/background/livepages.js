@@ -92,10 +92,11 @@ livePages.prototype.start = function(tab){
 	if(settings.options.monitor_less == true){ // Only load the less stuff if we need it.
 		chrome.tabs.executeScript(tab.id, {file: 'js/client/less-1.4.1.min.js'});
 	}
-  chrome.tabs.executeScript(tab.id, {file: 'js/client/live_resources/base.js'}, function(){});
-	chrome.tabs.executeScript(tab.id, {file: 'js/client/live_resources/css.js'}, function(){});
-	//chrome.tabs.executeScript(tab.id, {file: 'js/client/live_resources/less.js'}, function(){});
-	chrome.tabs.executeScript(tab.id, {file: 'js/client/livepage.js'}, function(){});
+  chrome.tabs.executeScript(tab.id, {file: 'js/client/live_resources/base.js'}, function(){
+    chrome.tabs.executeScript(tab.id, {file: 'js/client/live_resources/css.js'}, function(){
+      chrome.tabs.executeScript(tab.id, {file: 'js/client/livepage.js'}, function(){});
+    });
+  });
 }
 
 // Turns off live page on the tab.

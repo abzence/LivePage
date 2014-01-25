@@ -1,10 +1,7 @@
-function LiveResource(url){
+var LiveResource = function(url){
   this.url = url;
-  this.initalize();
-};
 
-LiveResource.prototype = {
-  initalize: function(){
+  this.initalize = function(){
     this.xhr = null;
     this.method = 'GET';
 
@@ -16,16 +13,16 @@ LiveResource.prototype = {
     };
 
     this.trimURL();
-  },
+  };
 
-  trimURL: function(){
+  this.trimURL = function(){
     if ($livePage.options.ignore_anchors == true) {
       url = this.url.split('#');
       this.url = url[0];
     }
-  },
+  };
 
-  isTrackable: function(){
+  this.isTrackable = function(){
     if ($livePage.options.skip_external == false) {
         return true;
     }
@@ -37,16 +34,16 @@ LiveResource.prototype = {
         "https:": 443
     }[location.protocol] + ")?$"), "") !== location.host) return false;
     return true;
-  },
+  };
 
-  cacheBreakingURL: function(){
+  this.cacheBreakingURL = function(){
     if (this.url.indexOf('?') > 0) {
       return this.url + '&livePage=' + (new Date() * 1);
     }
     return this.url + '?livePage=' + (new Date() * 1);
-  },
+  };
 
-  check: function(callback){
+  this.check = function(callback){
     this.xhr = new XMLHttpRequest();
     try {
       this.xhr.open(this.method, this.cacheBreakingURL(), false);
@@ -67,9 +64,9 @@ LiveResource.prototype = {
     }
 
     this.xhr = null;
-  },
+  };
 
-  testHeaders: function(){
+  this.testHeaders = function(){
     if (this.url.indexOf('file://') == 0 || $livePage.url.indexOf('file://') == 0){
       return true;
     }
@@ -83,9 +80,9 @@ LiveResource.prototype = {
       this.headers[h] = this.xhr.getResponseHeader(h);
     }
     return headersChanged;
-  },
+  };
 
-  testResponseBody: function(){
+  this.testResponseBody = function(){
     response = this.trimedResponseBody();
     returnVal = false;
     if(this.method == 'HEAD' || (this.cache != null && this.cache != response)){
@@ -94,9 +91,9 @@ LiveResource.prototype = {
     this.cache = response;
 
     return returnVal;
-  },
+  };
 
-  refresh: function(){
+  this.refresh = function(){
     try {
       chrome.extension.sendMessage({
         action: 'reload'
@@ -104,9 +101,9 @@ LiveResource.prototype = {
     } catch (e) {
       document.location.reload($livePage.url);
     }
-  },
+  };
 
-  trimedResponseBody: function(){
+  this.trimedResponseBody = function(){
     response = this.xhr.responseText;
     if ($livePage.options.tidy_html == true) {
       // Remove comments and whitespace.
@@ -122,5 +119,5 @@ LiveResource.prototype = {
     }
 
     return response;
-  }
+  };
 };

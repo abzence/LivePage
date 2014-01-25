@@ -17,8 +17,13 @@ LivePage = function(config){
 };
 LivePage.prototype = {
   findResources: function(){
+    var currentPage = new LiveResource(this.url);
+    if (this.options.monitor_html == true) {
+      this.addResource(currentPage);
+    }
+
     if (this.options.monitor_css == true) {
-      this.addCSSResources();
+      this.addCSSResources(currentPage);
     }
 
     if (this.options.monitor_less == true) {
@@ -32,10 +37,6 @@ LivePage.prototype = {
     if(this.options.monitor_custom == true){
       this.addResources('link[rel="livePage"]');
     }
-
-    if (this.options.monitor_html == true) {
-      this.addResource(new LiveResource(this.url));
-    }
   },
 
   addResources: function(query){
@@ -45,12 +46,21 @@ LivePage.prototype = {
     }
   },
 
-  addCSSResources: function(){
+  addCSSResources: function(currentPage){
     elements = document.styleSheets;
     for (var key = 0; key < elements.length; key++) {
-      if(elements[key].href != null){
-        debugger;
-        this.addResource(new LiveResourceCSS(elements[key].href));
+      if(elements[key].href != null){ // It's a linked CSS file
+        this.addResource(new LiveResourceCSS(elements[key].href, false, this));
+      }
+
+      if(elements[key].rules != null){ // It's a linked CSS file
+        for(var rule = 0; rule < elements[key].rules.length; rule++){
+          if(elements[key].rules[rule].constructor.name == 'CSSImportRule'){
+            var a = document.createElement('a');
+            a.href = elements[key].rules[rule].href;
+            this.addResource(new LiveResourceCSS(a.href, currentPage, this));
+          }
+        }
       }
     }
   },
@@ -59,6 +69,7 @@ LivePage.prototype = {
   },
 
   addResource: function(resource){
+    resource.initalize();
     if(resource.isTrackable){
       this.resources[this.lastChecked++] = resource;
     }
@@ -103,6 +114,5 @@ LivePage.prototype = {
 if (typeof $livePageConfig == "object") {
   $livePage = new LivePage($livePageConfig);
   $livePage.findResources();
-  debugger;
   $livePage.check();
 }
