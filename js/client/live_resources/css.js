@@ -3,6 +3,7 @@ var LiveResourceCSS = function(element, parentElem, LivePage){
   this.parentElem = parentElem;
   this.element = element;
   this.LivePage = LivePage;
+  this.ownerNode = null;
 
   this.initalize = function(){
     this.xhr = null;
@@ -18,6 +19,7 @@ var LiveResourceCSS = function(element, parentElem, LivePage){
     if(this.element && this.element.href){
       this.url = this.element.href
       this.trimURL();
+      this.ownerNode = this.element.ownerNode;
     }else{
       this.url = this.element;
     }
@@ -52,11 +54,16 @@ var LiveResourceCSS = function(element, parentElem, LivePage){
         }
       }
 
+      document.head.removeChild(styleElem);
       delete styleElem;
     }
   };
   this.refresh = function(){
-    // if we have a parent element, get that to reload insead.
+    if(this.parentElem){
+      return this.parentElem.refresh();
+    }
+    
+    this.ownerNode.setAttribute('href', this.cacheBreakingURL());
   };
 };
 

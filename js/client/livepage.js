@@ -50,7 +50,7 @@ LivePage.prototype = {
     elements = document.styleSheets;
     for (var key = 0; key < elements.length; key++) {
       if(elements[key].href != null){ // It's a linked CSS file
-        this.addResource(new LiveResourceCSS(elements[key].href, false, this));
+        this.addResource(new LiveResourceCSS(elements[key], false, this));
       }
 
       if(elements[key].rules != null){ // It's a linked CSS file
