@@ -63,7 +63,21 @@ var LiveResourceCSS = function(element, parentElem, LivePage){
       return this.parentElem.refresh();
     }
     
-    this.ownerNode.setAttribute('href', this.cacheBreakingURL());
+    var styleElem = document.createElement('style');
+    styleElem.type = 'text/css';
+    styleElem.appendChild(document.createTextNode(""));
+
+    this.ownerNode.insertAdjacentElement('afterEnd', styleElem);
+    this.ownerNode.parentElement.removeChild(this.ownerNode)
+
+    this.ownerNode = styleElem;
+    this.ownerNode.sheet.disabled = true;
+    styleElem.innerText = '@import url("'+this.cacheBreakingURL()+'");';
+    var _this = this;
+    setTimeout(function(){
+      debugger;
+      _this.ownerNode.sheet.disabled = false;
+    }, 1);
   };
 };
 

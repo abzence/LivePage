@@ -47,7 +47,7 @@ LivePage.prototype = {
   },
 
   addCSSResources: function(currentPage){
-    elements = document.styleSheets;
+    elements = window.document.styleSheets;
     for (var key = 0; key < elements.length; key++) {
       if(elements[key].href != null){ // It's a linked CSS file
         this.addResource(new LiveResourceCSS(elements[key], false, this));
