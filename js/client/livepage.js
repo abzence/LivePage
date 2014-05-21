@@ -4,6 +4,8 @@ LivePage = function(config){
   this.resources = [];
   this.lastChecked = 0;
   this.url = document.URL;
+  this.head = document.querySelector("head");
+  this.html = document.querySelector('html');
 
   if (this.options.use_css_transitions == true) {
     style = document.createElement("style");
