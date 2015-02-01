@@ -25,7 +25,6 @@ function Settings(){
 		use_only_get: false,
 		tidy_html: true,
 		tidy_inline_html: false,
-		use_css_transitions: true,
 		debug_mode: false,
 		refresh_rate: 200
 	};
@@ -151,12 +150,14 @@ livePages.prototype.start = function(tab){
 	chrome.browserAction.setBadgeText({text: chrome.i18n.getMessage('@live'), tabId: tab.id});
 	chrome.browserAction.setTitle({title: chrome.i18n.getMessage('@disable_on_this_tab'), tabId: tab.id});
 	
-	// Make the page Live
-	chrome.tabs.executeScript(tab.id, {code: 'var $livePageConfig = '+JSON.stringify(settings.options)+'; var $livePage = false;'});
 	if(settings.options.monitor_less == true){ // Only load the less stuff if we need it.
 		chrome.tabs.executeScript(tab.id, {file: 'js/less-1.4.1.min.js'});
-	}
+	
 	chrome.tabs.executeScript(tab.id, {file: 'js/livepage.js'});
+    
+    // Start LivePage
+	chrome.tabs.executeScript(tab.id, {code: 'var $livePageConfig = '+JSON.stringify(settings.options)+'; var $livePage = false;'});
+	chrome.tabs.executeScript(tab.id, {code: 'if (typeof $livePageConfig == "object") { var $livePage = new livePage($livePageConfig, document); $LivePageDebug('Starting Up'); $livePage.scanPage();}'});
 }
 
 // Turns off live page on the tab.

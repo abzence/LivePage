@@ -2,7 +2,7 @@
  * LivePage is based on Live.js by Martin Kool (@mrtnkl). 
  * Rewritten by Mike Rogers (@MikeRogers0)
  */
-function livePage(config) {
+function livePage(config, document_scope) {
     // Set up some defaults variables
     this.options = config;
     this.options.enabled = true;
@@ -10,19 +10,12 @@ function livePage(config) {
     this.superiorResource = null;
     this.lastChecked = 0;
     this.lastUpdatedResource = null;
-    this.url = document.URL;
-    this.head = document.querySelector("head");
-    this.html = document.querySelector('html');
+    this.document_scope = document_scope;
 
-    // Add the nice CSS morph
-    if (this.options.use_css_transitions == true) {
-        style = document.createElement("style"),
-        css = '.livepage-loading * {-webkit-transition: all .2s ease-in;}';
-        style.setAttribute("type", "text/css");
-        this.head.appendChild(style);
-        style.appendChild(document.createTextNode(css));
-        this.html.className += ' livepage-loading';
-    }
+    this.url = document.URL;
+    this.head = document_scope.querySelector("head");
+    this.html = document_scope.querySelector('html');
+
 
     // if we have a sessionStorage of the last updated resource, pop it in.
     if (sessionStorage['LivePage_LastUpdatedResource'] != undefined) {
@@ -38,12 +31,12 @@ livePage.prototype.scanPage = function () {
 
     // Add resources checkers in here
     if (this.options.monitor_css == true) {
-        elements = document.querySelectorAll('link[href*=".css"]');
+        elements = this.document_scope.querySelectorAll('link[href*=".css"]');
         for (var key = 0; key < elements.length; key++) {
             this.addResource(elements[key].href, 'css', false, elements[key].media);
         }
 
-        styleSheets = document.styleSheets;
+        styleSheets = this.document_scope.styleSheets;
 
         for (var key = 0; key < styleSheets.length; key++) {
             var sheet = styleSheets[key];
@@ -83,21 +76,21 @@ livePage.prototype.scanPage = function () {
     }
 
     if (this.options.monitor_less == true) {
-        elements = document.querySelectorAll('link[href*=".less"]');
+        elements = this.document_scope.querySelectorAll('link[href*=".less"]');
         for (var key = 0; key < elements.length; key++) {
             this.addResource(elements[key].href, 'less', false, false);
         }
     }
 
     if (this.options.monitor_js == true) {
-        elements = document.querySelectorAll('script[src*=".js"]');
+        elements = this.document_scope.querySelectorAll('script[src*=".js"]');
         for (var key = 0; key < elements.length; key++) {
             this.addResource(elements[key].src, 'js', false, false);
         }
     }
     
     if(this.options.monitor_custom == true){
-		elements = document.querySelectorAll('link[rel="livePage"]');
+		elements = this.document_scope.querySelectorAll('link[rel="livePage"]');
 		for(var key=0; key<elements.length; key++){
 			fileType = elements[key].href.split('.').pop();
 			if (['css','html','less','js'].indexOf(fileType)){
@@ -387,7 +380,7 @@ LiveResource.prototype.refresh = function () {
 
     if (this.type == 'css') {
         // create a new html element
-        var cssElement = document.createElement('link');
+        var cssElement = this.document_scope.createElement('link');
         cssElement.setAttribute("type", "text/css");
         cssElement.setAttribute("rel", "stylesheet");
         cssElement.setAttribute("href", this.nonCacheURL() + "?LivePage=" + new Date() * 1);
@@ -397,12 +390,12 @@ LiveResource.prototype.refresh = function () {
 
         // Remove the old element we created in the last update. Than update.
         if (this.element != null) {
-            $livePage.head.removeChild(document.querySelector('link[href^="' + this.element.href + '"]'));
+            $livePage.head.removeChild(this.document_scope.querySelector('link[href^="' + this.element.href + '"]'));
         }
         this.element = cssElement;
     } else if (this.type == 'less') {
         // Tell LESS CSS to reload.
-        $LivePageLESS.refresh(document.querySelector('link[href^="' + this.url + '"]'));
+        $LivePageLESS.refresh(this.document_scope.querySelector('link[href^="' + this.url + '"]'));
     } else {
         // Cache the item last updated so we poll it more.
         this.sessionCache();
@@ -446,9 +439,3 @@ function $LivePageDebug(message) {
         console.log('LivePage: ', message);
     }
 };
-
-if (typeof $livePageConfig == "object") {
-    var $livePage = new livePage($livePageConfig);
-    $LivePageDebug('Starting Up');
-    $livePage.scanPage();
-}
