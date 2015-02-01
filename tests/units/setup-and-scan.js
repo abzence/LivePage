@@ -16,5 +16,9 @@ QUnit.module("Scan", {
 });
 
 QUnit.test("Finds all the CSS sheets", function( assert ) {
-  assert.equal($livePage.resources.length, 1)
+  var resources = _.filter($livePage.resources, function(resource){
+    return (resource instanceof LiveResourceCSS)
+  });
+
+  assert.equal(resources.length, 1)
 });

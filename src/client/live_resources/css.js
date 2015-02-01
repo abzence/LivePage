@@ -55,8 +55,6 @@ var LiveResourceCSS = function(element, parentElem, LivePage){
         }
       }
 
-      debugger;
-      
       //styleElem.remove();
       //document.head.removeChild(styleElem);
       //delete styleElem;

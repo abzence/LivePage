@@ -36,5 +36,7 @@ Contribute on GitHub: https://github.com/MikeRogers0/LivePage
 Find it in the Chrome Web Store: https://chrome.google.com/webstore/detail/pilnojpmdoofaelbinaeodfpjheijkbh/
 
 Extension by: Mike Rogers (@MikeRogers0)
+
 Original LiveJS: @mrtnkl / http://livejs.com/
+
 Icon By: Everaldo Coelho http://www.iconfinder.com/icondetails/17829/128/global_internet_network_planet_seo_web_icon
