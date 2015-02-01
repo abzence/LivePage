@@ -1,12 +1,9 @@
-v0.1.2:
+v2.0.0
   date: 2015-01-19
   changes:
-	- Bower bump.
-v0.1.1:
-  date: 2015-01-19
+	- New code artechture, makes things easier to test.
+	- Async checking for updates
+v1.x.x
+  date: 2015-02-01
   changes:
-	- Fixing errors with package.json stopping travis passing
-v0.1.0:
-  date: 2015-01-19
-  changes:
-	- First release - Might change everything depending on feedback.
+	- The old version that is no longer realiable.

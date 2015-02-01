@@ -11,6 +11,7 @@ QUnit.test( "LivePage can initalize", function( assert ) {
 QUnit.module("Scan", {
   beforeEach: function(){
     $livePage = new LivePage($livePageConfig);
+    $livePage.findResources();
   }
 });
 

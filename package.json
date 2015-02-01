@@ -1,0 +1,36 @@
+{
+  "name": "LivePage",
+  "version": "2.0.0",
+  "description": "Chrome Extension that updates CSS as it changes.",
+  "keywords": [
+    ],
+  "homepage": "https://github.com/MikeRogers0/LivePage",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MikeRogers0/LivePage.git"
+  },
+  "bugs": "https://github.com/MikeRogers0/LivePage/issues",
+  "licenses": [
+  {
+    "type": "MIT",
+    "url": "http://mit-license.org/"
+  }
+  ],
+    "author": {
+      "name": "Mike Rogers",
+      "web": "https://github.com/MikeRogers0"
+    },
+    "main": "./src/",
+    "scripts": {
+      "test": "grunt test"
+    },
+    "dependencies": {},
+    "devDependencies": {
+      "qunit": "~0.5.15",
+      "grunt": "~0.4.0",
+      "grunt-contrib-jshint": "~0.4.3",
+      "grunt-contrib-qunit": "~0.2.1",
+      "grunt-contrib-uglify": "~0.1.2",
+      "qunitjs": "~1.11.0"
+    }
+}
