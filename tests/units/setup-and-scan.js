@@ -1,6 +1,6 @@
 QUnit.module("Setup", {
   beforeEach: function(){
-    $livePage = new livePage($livePageConfig, document.getElementById('qunit-fixture'));
+    $livePage = new LivePage($livePageConfig);
   }
 });
 
@@ -10,12 +10,10 @@ QUnit.test( "LivePage can initalize", function( assert ) {
 
 QUnit.module("Scan", {
   beforeEach: function(){
-    $livePage = new livePage($livePageConfig, document.getElementById('qunit-fixture'));
-    $livePage.scanPage();
+    $livePage = new LivePage($livePageConfig);
   }
 });
 
 QUnit.test("Finds all the CSS sheets", function( assert ) {
-  debugger;
   assert.equal($livePage.resources.length, 1)
 });

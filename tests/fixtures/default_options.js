@@ -12,7 +12,6 @@ var $livePageConfig  = {
   skip_external: true,
   tidy_html: true,
   tidy_inline_html: false,
-  use_css_transitions: true,
   use_only_get: false
 };
 
