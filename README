@@ -17,8 +17,18 @@ All future milestones & current issues can be found on https://github.com/MikeRo
 
 ## Running the tests
 
+### Setup dependencies
+
     npm install
+
+Run via the grunt-cli:
+
     grunt
+
+or check in the browser:
+
+    php -S 127.0.0.1:8080
+    open 'http://127.0.0.1:8080/tests/livepage.html'
 
 ## Footnotes
 
